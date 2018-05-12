@@ -28,9 +28,10 @@ let endPoint = map[endY][endX];
 // begin search of all nodes until you get to the goal
 function pathSearch(map,startX,startY,endX,endY){
 
+    let currentTile = map[startY][startX];
     // loop surrounding objects
     for (let i = 0; i > map.length; i++ ){
-
+        
     };
 
 };
