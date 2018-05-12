@@ -23,11 +23,13 @@ const startPoint = [1,1];
 let endPoint = [9,9];
 
 // H value is the heuristic we will use
-function heuristic(node){
-    let dx = abs(node.x - goal.x)
-    let dy = abs(node.y - goal.y)
-    return D * (dx + dy)
+function manhattan(currentX, currentY, goalX, goalY){
+    let dx = Math.abs(goalX - currentX);
+    let dy = Math.abs(goalY - currentY);
+    return dx + dy;
 }
+
+console.log(manhattan(1,1,3,3))
 // G value is the cost of movement
 
 // F value is G + H
