@@ -1,6 +1,23 @@
 var canvas = document.getElementById('myCanvas');
 var context = canvas.getContext('2d');
 
+// H value is the heuristic we will use
+function heuristic(node){
+    let dx = abs(node.x - goal.x)
+    let dy = abs(node.y - goal.y)
+    return D * (dx + dy)
+}
+// G value is the cost of movement
+
+// F value is G + H
+
+// Parent = node to reach node
+
+// open list
+
+// closed list
+
+
 
 const inventorySeed = [
     {
@@ -35,9 +52,6 @@ const inventorySeed = [
     }
 ];
 
-function distance (x1,x2,y1,y2){
-    return Math.sqrt( Math.pow((x1 - x2),2) + Math.pow((y1 - y2),2) );
-}
 
 // funciton to draw lines from whatever list is passed in
 function createPath (inventory){
@@ -74,12 +88,9 @@ function createPath (inventory){
         context.stroke();
 }
 
-// H value is the heuristic we will use
-let H = ;
-// G value is the cost of movement
 
 
 
-// createPath(inventorySeed);
+
 
 
