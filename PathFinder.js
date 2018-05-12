@@ -1,6 +1,22 @@
 var canvas = document.getElementById('myCanvas');
 var context = canvas.getContext('2d');
 
+const map = [
+                [0,0,0,0,0,0,0,0,0,0],
+                [0,0,0,0,0,0,0,0,0,0],
+                [0,0,0,0,0,0,0,0,0,0],
+                [0,0,0,0,0,0,0,0,0,0],
+                [0,0,0,0,0,0,0,0,0,0],
+                [0,0,0,0,0,0,0,0,0,0],
+                [0,0,0,0,0,0,0,0,0,0],
+                [0,0,0,0,0,0,0,0,0,0],
+                [0,0,0,0,0,0,0,0,0,0],
+                [0,0,0,0,0,0,0,0,0,0]
+            ];
+
+const startPoint = [1,1];
+let endPoint = [9,9];
+
 // H value is the heuristic we will use
 function heuristic(node){
     let dx = abs(node.x - goal.x)
