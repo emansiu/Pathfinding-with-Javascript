@@ -74,6 +74,10 @@ function createPath (inventory){
         context.stroke();
 }
 
+// H value is the heuristic we will use
+let H = ;
+// G value is the cost of movement
+
 
 
 // createPath(inventorySeed);
