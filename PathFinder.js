@@ -76,6 +76,6 @@ function createPath (inventory){
 
 
 
-createPath(inventorySeed);
+// createPath(inventorySeed);
 
 
