@@ -15,7 +15,7 @@ let open = [];
 // closed list
 let closed = [];
 
-const startX = 0;
+const startX = 1;
 const startY = 0;
 const startPoint = map[startY][startX];
 
