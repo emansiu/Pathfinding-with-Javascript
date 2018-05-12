@@ -2,7 +2,7 @@ var canvas = document.getElementById('myCanvas');
 var context = canvas.getContext('2d');
 
 const map = [
-                [1,1,0,1,0,],
+                [1,1,1,1,0,],
                 [0,1,0,0,0,],
                 [0,1,0,0,0,],
                 [0,1,1,1,0,],
