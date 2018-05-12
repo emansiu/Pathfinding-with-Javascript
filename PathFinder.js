@@ -3,7 +3,7 @@ var context = canvas.getContext('2d');
 
 const map = [
                 [0,0,0,0,0,0,0,0,0,0],
-                [0,0,0,0,0,0,0,0,0,0],
+                [0,,0,0,0,0,0,0,0,0],
                 [0,0,0,0,0,0,0,0,0,0],
                 [0,0,0,0,0,0,0,0,0,0],
                 [0,0,0,0,0,0,0,0,0,0],
@@ -16,23 +16,25 @@ const map = [
 
 // open list
 let open = [];
-let closed = [];
+
 // closed list
+let closed = [];
 
 const startPoint = [1,1];
 let endPoint = [9,9];
 
-// H value is the heuristic we will use
+// H value is the heuristic we will use (in this case manhattan). This is
+// how many steps away the current marker is from the goal.
 function manhattan(currentX, currentY, goalX, goalY){
     let dx = Math.abs(goalX - currentX);
-    let dy = Math.abs(goalY - currentY);
+    let dy = Math.abs(goalY - currentY); 
     return dx + dy;
 }
 
-console.log(manhattan(1,1,3,3))
-// G value is the cost of movement
+console.log(map[1][1]);
+// G value is the cost of movement / also known as step cost
 
-// F value is G + H
+// F value is G + H, or the total it takes from beginning point to end point
 
 // Parent = node to reach node
 
