@@ -31,9 +31,18 @@ function manhattan(currentX, currentY, goalX, goalY){
     return dx + dy;
 }
 
-console.log(manhattan(startX,startY,endX,endY));
 // G value is the cost of movement / also known as step cost
+// function cost(){
+//     let tileCost;
 
+//     if (currentTile === 0){
+//         tileCost = 0;
+//     }
+//     else {
+//         tileCost = 1;
+//     }
+//     return tileCost
+// }
 // F value is G + H, or the total it takes from beginning point to end point
 
 // Parent = node to reach node
