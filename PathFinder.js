@@ -14,6 +14,11 @@ const map = [
                 [0,0,0,0,0,0,0,0,0,0]
             ];
 
+// open list
+let open = [];
+let closed = [];
+// closed list
+
 const startPoint = [1,1];
 let endPoint = [9,9];
 
@@ -29,9 +34,7 @@ function heuristic(node){
 
 // Parent = node to reach node
 
-// open list
 
-// closed list
 
 
 
