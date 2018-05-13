@@ -25,19 +25,20 @@ let endPoint = map[endY][endX];
 
 
 
-// begin search of all nodes until you get to the goal
+// begin search of all nodes until you get to the goal-------------------------------------
 function pathSearch(map,startX,startY,endX,endY){
 
+    let nextTile = [i,j];
     let currentTile = map[startY][startX];
     // loop surrounding objects
     for (let i = 0; i > map.length; i++ ){
-        
+
     };
 
 };
 
 // H value is the heuristic we will use (in this case manhattan). This is
-// how many steps away the current marker is from the goal.
+// how many steps away the current marker is from the goal.----------------------------------
 function manhattanDistance(currentX, currentY, goalX, goalY){
     let dx = Math.abs(goalX - currentX);
     let dy = Math.abs(goalY - currentY); 
@@ -45,17 +46,7 @@ function manhattanDistance(currentX, currentY, goalX, goalY){
 };
 
 // G value is the cost of movement / also known as step cost
-function cost(){
-    let tileCost;
 
-    if (currentTile === 0){
-        tileCost = 0;
-    }
-    else {
-        tileCost = 1;
-    }
-    return tileCost
-};
 // F value is G + H, or the total it takes from beginning point to end point
 
 // Parent = node to reach node
