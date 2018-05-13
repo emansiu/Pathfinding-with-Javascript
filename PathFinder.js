@@ -13,8 +13,44 @@ let frontier = [];
 let startPoint = [0,0];
 let endPoint = [4,4];
 
+function getShortestPath(startCoordinates,map){
+    let distanceFromTop = startPoint[0];
+    let distanceFromLeft = startPoint[1];
 
+    let location = {
+        distanceFromTop: distanceFromTop,
+        distanceFromLeft: distanceFromLeft,
+        path:[],
+        status:'start'
+    };
 
+    // initializing start location into queue:
+    let frontier = [location];
+
+    //Now looping through grid to find the goal
+    while (frontier.length > 0){
+        // get 1st element from array while removing it simultaneously.
+        let currentCell = frontier.shift();
+
+        let directions = ['up','right','down','left'];
+
+        directions.forEach(function(d){
+            let newCell = exploreInDirection(currentCell, directions[d], map);
+
+            if(newCell.status === 'Goal'){
+                return newCell.path;
+            } else if (newCell.status === 'Valid'){
+                frontier.push(newCell);
+            };
+        });
+
+    };
+
+};
+
+let cellStatus = function(location, map){
+
+};
 
 
 
@@ -105,8 +141,6 @@ function createPath (inventory){
         // finally draw the stroke
         context.stroke();
 }
-
-
 
 
 

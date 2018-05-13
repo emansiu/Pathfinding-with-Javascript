@@ -6,4 +6,5 @@ function Cell(i,j,x,y,f,g,h){
     this.f = f;
     this.g = g;
     this.h = h;
+    this.status = status
 }
