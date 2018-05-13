@@ -133,7 +133,7 @@ for (var i=0; i<gridSize; i++) {
   for (var j=0; j<gridSize; j++) {
     grid[i][j] = 'Empty';
   }
-}
+};
 
 // Think of the first index as "distance from the top row"
 // Think of the second index as "distance from the left-most column"
