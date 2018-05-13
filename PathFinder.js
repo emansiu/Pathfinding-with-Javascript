@@ -10,7 +10,7 @@ const map = [
             ];
 
 let frontier = [];
-let startPoint = [0,1];
+let startPoint = [0,0];
 let endPoint = [4,4];
 
 
@@ -18,17 +18,6 @@ let endPoint = [4,4];
 
 
 
-// begin search of all nodes until you get to the goal-------------------------------------
-function pathSearch(map,startX,startY,endX,endY){
-
-    let nextTile = [i,j];
-    let currentTile = map[startY][startX];
-    // loop surrounding objects
-    for (let i = 0; i > map.length; i++ ){
-
-    };
-
-};
 
 // H value is the heuristic we will use (in this case manhattan). This is
 // how many steps away the current marker is from the goal.----------------------------------

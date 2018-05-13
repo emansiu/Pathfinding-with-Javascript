@@ -1,58 +1,58 @@
 // Start location will be in the following format:
 // [distanceFromTop, distanceFromLeft]
 var findShortestPath = function(startCoordinates, grid) {
-  var distanceFromTop = startCoordinates[0];
-  var distanceFromLeft = startCoordinates[1];
+    var distanceFromTop = startCoordinates[0];
+    var distanceFromLeft = startCoordinates[1];
 
-  // Each "location" will store its coordinates
-  // and the shortest path required to arrive there
-  var location = {
-    distanceFromTop: distanceFromTop,
-    distanceFromLeft: distanceFromLeft,
-    path: [],
-    status: 'Start'
-  };
+    // Each "location" will store its coordinates
+    // and the shortest path required to arrive there
+    var location = {
+        distanceFromTop: distanceFromTop,
+        distanceFromLeft: distanceFromLeft,
+        path: [],
+        status: 'Start'
+    };
 
-  // Initialize the queue with the start location already inside
-  var queue = [location];
+    // Initialize the queue with the start location already inside
+    var queue = [location];
 
-  // Loop through the grid searching for the goal
-  while (queue.length > 0) {
-    // Take the first location off the queue
-    var currentLocation = queue.shift();
+    // Loop through the grid searching for the goal
+    while (queue.length > 0) {
+        // Take the first location off the queue
+        var currentLocation = queue.shift();
 
-    // Explore North
-    var newLocation = exploreInDirection(currentLocation, 'North', grid);
-    if (newLocation.status === 'Goal') {
-      return newLocation.path;
-    } else if (newLocation.status === 'Valid') {
-      queue.push(newLocation);
+        // Explore North
+        var newLocation = exploreInDirection(currentLocation, 'North', grid);
+            if (newLocation.status === 'Goal') {
+            return newLocation.path;
+            } else if (newLocation.status === 'Valid') {
+            queue.push(newLocation);
+            }
+
+        // Explore East
+        var newLocation = exploreInDirection(currentLocation, 'East', grid);
+            if (newLocation.status === 'Goal') {
+            return newLocation.path;
+            } else if (newLocation.status === 'Valid') {
+            queue.push(newLocation);
+            }
+
+        // Explore South
+        var newLocation = exploreInDirection(currentLocation, 'South', grid);
+            if (newLocation.status === 'Goal') {
+            return newLocation.path;
+            } else if (newLocation.status === 'Valid') {
+            queue.push(newLocation);
+            }
+
+        // Explore West
+        var newLocation = exploreInDirection(currentLocation, 'West', grid);
+            if (newLocation.status === 'Goal') {
+            return newLocation.path;
+            } else if (newLocation.status === 'Valid') {
+            queue.push(newLocation);
+            }
     }
-
-    // Explore East
-    var newLocation = exploreInDirection(currentLocation, 'East', grid);
-    if (newLocation.status === 'Goal') {
-      return newLocation.path;
-    } else if (newLocation.status === 'Valid') {
-      queue.push(newLocation);
-    }
-
-    // Explore South
-    var newLocation = exploreInDirection(currentLocation, 'South', grid);
-    if (newLocation.status === 'Goal') {
-      return newLocation.path;
-    } else if (newLocation.status === 'Valid') {
-      queue.push(newLocation);
-    }
-
-    // Explore West
-    var newLocation = exploreInDirection(currentLocation, 'West', grid);
-    if (newLocation.status === 'Goal') {
-      return newLocation.path;
-    } else if (newLocation.status === 'Valid') {
-      queue.push(newLocation);
-    }
-  }
 
   // No valid path found
   return false;
@@ -126,7 +126,7 @@ var exploreInDirection = function(currentLocation, direction, grid) {
 
 // Create a 4x4 grid
 // Represent the grid as a 2-dimensional array
-var gridSize = 4;
+var gridSize = 5;
 var grid = [];
 for (var i=0; i<gridSize; i++) {
   grid[i] = [];
@@ -140,11 +140,13 @@ for (var i=0; i<gridSize; i++) {
 
 // This is how we would represent the grid with obstacles above
 grid[0][0] = "Start";
-grid[2][2] = "Goal";
+grid[4][4] = "Goal";
 
 grid[1][1] = "Obstacle";
 grid[1][2] = "Obstacle";
 grid[1][3] = "Obstacle";
 grid[2][1] = "Obstacle";
+
+grid[3][1] = "Obstacle";
 
 console.log(findShortestPath([0,0], grid));
