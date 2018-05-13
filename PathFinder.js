@@ -3,17 +3,16 @@ var context = canvas.getContext('2d');
 
 const map = [
                 [1,1,1,1,0,],
-                [0,1,0,0,0,],
+                [0,"front",0,0,0,],
                 [0,1,0,0,0,],
                 [0,1,1,1,0,],
                 [0,0,0,1,1,],
             ];
 
-// open list
-let open = [];
-
-// closed list
-let closed = [];
+let frontier = [];
+console.log(frontier);
+frontier.push(map[1][1]);
+console.log(frontier);
 
 const startX = 1;
 const startY = 0;
