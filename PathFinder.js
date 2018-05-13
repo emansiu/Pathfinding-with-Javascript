@@ -3,24 +3,18 @@ var context = canvas.getContext('2d');
 
 const map = [
                 [1,1,1,1,0,],
-                [0,"front",0,0,0,],
+                [0,1,0,0,0,],
                 [0,1,0,0,0,],
                 [0,1,1,1,0,],
                 [0,0,0,1,1,],
             ];
 
 let frontier = [];
-console.log(frontier);
-frontier.push(map[1][1]);
-console.log(frontier);
+let startPoint = [0,1];
+let endPoint = [4,4];
 
-const startX = 1;
-const startY = 0;
-const startPoint = map[startY][startX];
 
-let endX = 4;
-let endY = 4;
-let endPoint = map[endY][endX];
+
 
 
 
