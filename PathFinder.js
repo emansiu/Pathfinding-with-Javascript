@@ -1,5 +1,5 @@
-var canvas = document.getElementById('myCanvas');
-var context = canvas.getContext('2d');
+// var canvas = document.getElementById('myCanvas');
+// var context = canvas.getContext('2d');
 
 const map = [
                 [1,1,1,1,0,],
@@ -28,7 +28,7 @@ function getShortestPath(startCoordinates,map){
     // initializing start location into queue:
     let frontier = [location];
 
-    //Now looping through grid to find the goal
+    //Now looping through map to find the goal
     while (frontier.length > 0){
         // get 1st element from array while removing it simultaneously.
         let currentCell = frontier.shift();
@@ -62,7 +62,7 @@ function cellStatus(location, map){
             dft < 0 ||
             dft >= map.length) {
 
-            // location is not on the grid
+            // location is not on the map
             return "Invalid";
 
             } else if (map[dft][dfl] === "Goal") {
@@ -117,22 +117,12 @@ function exploreInDirection(currentCell, direction, map){
 
 
 
-// H value is the heuristic we will use (in this case manhattan). This is
-// how many steps away the current marker is from the goal.----------------------------------
+// heuristic if we go down A* route
 function manhattanDistance(currentX, currentY, goalX, goalY){
     let dx = Math.abs(goalX - currentX);
     let dy = Math.abs(goalY - currentY); 
     return dx + dy;
 };
-
-// G value is the cost of movement / also known as step cost
-
-// F value is G + H, or the total it takes from beginning point to end point
-
-// Parent = node to reach node
-
-
-
 
 
 const inventorySeed = [
@@ -186,6 +176,19 @@ function createPath (inventory){
 }
 
 
+
+map[0][0] = "Start";
+map[4][4] = "Goal";
+
+map[0][2] = "Obstacle";
+map[1][1] = "Obstacle";
+map[1][2] = "Obstacle";
+map[2][1] = "Obstacle";
+
+map[3][3] = "Obstacle";
+map[4][3] = "Obstacle";
+
+console.log(getShortestPath([0,0], map));
 
 
 
