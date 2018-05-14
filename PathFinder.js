@@ -27,6 +27,7 @@ var findShortestPath = function(startCoordinates, grid) {
         let directions = ['up','right','down','left'];
 
         directions.forEach(function(d){
+            console.log(d)
             let newLocation = exploreInDirection(currentLocation, directions[d], grid);
 
             if(newLocation.status === 'Goal'){
