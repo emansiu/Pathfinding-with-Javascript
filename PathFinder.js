@@ -20,24 +20,42 @@ var findShortestPath = function(startCoordinates, grid) {
     var queue = [location];
 
     //Now looping through map to find the goal
-    while (queue.length > 0){
-        // get 1st element from array while removing it simultaneously.
-        let currentLocation = queue.shift();
+    while (queue.length > 0) {
+        // Take the first location off the queue
+        var currentLocation = queue.shift();
 
-        let directions = ['up','right','down','left'];
+        // Explore North
+        var newLocation = exploreInDirection(currentLocation, 'up', grid);
+            if (newLocation.status === 'Goal') {
+            return newLocation.path;
+            } else if (newLocation.status === 'Valid') {
+            queue.push(newLocation);
+            }
 
-        directions.forEach(function(d){
-            console.log(d)
-            let newLocation = exploreInDirection(currentLocation, directions[d], grid);
+        // Explore East
+        var newLocation = exploreInDirection(currentLocation, 'right', grid);
+            if (newLocation.status === 'Goal') {
+            return newLocation.path;
+            } else if (newLocation.status === 'Valid') {
+            queue.push(newLocation);
+            }
 
-            if(newLocation.status === 'Goal'){
-                return newLocation.path;
-            } else if (newLocation.status === 'Valid'){
-                queue.push(newLocation);
-            };
-        });
+        // Explore South
+        var newLocation = exploreInDirection(currentLocation, 'down', grid);
+            if (newLocation.status === 'Goal') {
+            return newLocation.path;
+            } else if (newLocation.status === 'Valid') {
+            queue.push(newLocation);
+            }
 
-    };
+        // Explore West
+        var newLocation = exploreInDirection(currentLocation, 'left', grid);
+            if (newLocation.status === 'Goal') {
+            return newLocation.path;
+            } else if (newLocation.status === 'Valid') {
+            queue.push(newLocation);
+            }
+    }
 
   // No valid path found
   return false;
