@@ -76,19 +76,20 @@ var findShortestPath = function(startCoordinates, grid) {
         // Take the first location off the queue
         var currentLocation = queue.shift();
 
-        // function directionHistory (direction){
-        //     let newLocation = exploreInDirection(currentLocation,direction,grid);
-        //     if (newLocation.status === 'Goal') {
-        //     return newLocation.path;
-        //     } else if (newLocation.status === 'Valid') {
-        //     queue.push(newLocation);
-        //     }
-        // };
+        // let direction = ['up','right','down','left'];
 
-        // directionHistory('up');
-        // directionHistory('right');
-        // directionHistory('down');
-        // directionHistory('left');
+        // function directionHistory (direction){
+        //     direction.forEach(function(d){
+        //         let newLocation = exploreInDirection(currentLocation,d,grid);
+
+        //         if (newLocation.status === 'Goal') {
+        //         return newLocation.path;
+        //         } else if (newLocation.status === 'Valid') {
+        //         queue.push(newLocation);
+        //         }
+        //     });
+        // };
+        // directionHistory(direction);
 
         // Explore up
         var newLocation = exploreInDirection(currentLocation, 'up', grid);
@@ -117,11 +118,14 @@ var findShortestPath = function(startCoordinates, grid) {
         // Explore left
         var newLocation = exploreInDirection(currentLocation, 'left', grid);
             if (newLocation.status === 'Goal') {
-                // get coordinates to draw later
-                let coordinates = newLocation.distanceFromTop + ","+newLocation.distanceFromLeft
-                // Find and remove item from an array
-                inventoryQueue.splice(isItemInArray(inventoryQueue,coordinates), 1);
-                return coordinates;
+                
+                                // // get coordinates to draw later
+                                // let coordinates = newLocation.distanceFromTop + ","+newLocation.distanceFromLeft
+                                // // Find and remove item from an array
+                                // inventoryQueue.splice(isItemInArray(inventoryQueue,coordinates), 1);
+                                // return coordinates;
+
+                return newLocation.path;
 
             } else if (newLocation.status === 'Valid') {
             queue.push(newLocation);
@@ -225,17 +229,42 @@ for(var i = 0; i < grid.length; i++) {
     }
 };
 
-console.log(inventoryQueue);
-console.log(grid[1][0])
-console.log(findShortestPath([0,1], grid).split(","));
-console.log(inventoryQueue);
-    console.log(grid[1][0])
-    console.log(findShortestPath([1,0],grid));
+// console.log(inventoryQueue);
+// console.log(grid[1][0])
+console.log(findShortestPath([0,1], grid));
+console.table(grid);
+// console.log(inventoryQueue);
+// console.log(grid[1][1])
 
+function resetPaths(){
+
+    for(var i = 0; i < grid.length; i++) {
+        for(var j = 0; j < grid.length; j++) {
+            
+            if (grid[i][j] === 0) {
+                grid[i][j] = "Obstacle";
+            } else if (grid[i][j] === "Visited") {
+            grid[i][j] = "Empty";
+            } 
+        }
+    };
+
+}
+
+resetPaths();
+console.log(findShortestPath([1,0], grid));
+resetPaths();
+console.table(grid);
+console.log(findShortestPath([0,4], grid));
+console.table(grid);
+console.log(inventoryQueue);
+// console.log(inventoryQueue);
 // while (inventoryQueue.length > 1) {
     
-//     let newStart = findShortestPath([0,1], grid).split(",");
+//     console.log(inventoryQueue.length);
+//     let newStart = findShortestPath([0,1], grid);
 //     console.log(newStart);
+//     resetPaths();
 //     console.log(findShortestPath(newStart,grid));
 
 // }
