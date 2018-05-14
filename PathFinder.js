@@ -19,45 +19,24 @@ var findShortestPath = function(startCoordinates, grid) {
     // Initialize the queue with the start location already inside
     var queue = [location];
 
-    // Loop through the grid searching for the goal
-    while (queue.length > 0) {
-        // Take the first location off the queue
-        var currentLocation = queue.shift();
+    //Now looping through map to find the goal
+    while (queue.length > 0){
+        // get 1st element from array while removing it simultaneously.
+        let currentLocation = queue.shift();
 
-        // Explore North
-        var newLocation = exploreInDirection(currentLocation, 'North', grid);
-            if (newLocation.status === 'Goal') {
-                console.log(`${newLocation.distanceFromLeft} and ${newLocation.distanceFromTop}` )
-            return newLocation.path;
-            } else if (newLocation.status === 'Valid') {
-            queue.push(newLocation);
-            }
+        let directions = ['up','right','down','left'];
 
-        // Explore East
-        var newLocation = exploreInDirection(currentLocation, 'East', grid);
-            if (newLocation.status === 'Goal') {
-                console.log(`${newLocation.distanceFromLeft} and ${newLocation.distanceFromTop}` )
-            return newLocation.path;
-            } else if (newLocation.status === 'Valid') {
-            queue.push(newLocation);
-            }
+        directions.forEach(function(d){
+            let newLocation = exploreInDirection(currentLocation, directions[d], grid);
 
-        // Explore South
-        var newLocation = exploreInDirection(currentLocation, 'South', grid);
-            if (newLocation.status === 'Goal') {
-            return newLocation.path;
-            } else if (newLocation.status === 'Valid') {
-            queue.push(newLocation);
-            }
+            if(newLocation.status === 'Goal'){
+                return newLocation.path;
+            } else if (newLocation.status === 'Valid'){
+                queue.push(newLocation);
+            };
+        });
 
-        // Explore West
-        var newLocation = exploreInDirection(currentLocation, 'West', grid);
-            if (newLocation.status === 'Goal') {
-            return newLocation.path;
-            } else if (newLocation.status === 'Valid') {
-            queue.push(newLocation);
-            }
-    }
+    };
 
   // No valid path found
   return false;
@@ -100,13 +79,13 @@ var exploreInDirection = function(currentLocation, direction, grid) {
   var dft = currentLocation.distanceFromTop;
   var dfl = currentLocation.distanceFromLeft;
 
-  if (direction === 'North') {
+  if (direction === 'up') {
     dft -= 1;
-  } else if (direction === 'East') {
+  } else if (direction === 'right') {
     dfl += 1;
-  } else if (direction === 'South') {
+  } else if (direction === 'down') {
     dft += 1;
-  } else if (direction === 'West') {
+  } else if (direction === 'left') {
     dfl -= 1;
   }
 
