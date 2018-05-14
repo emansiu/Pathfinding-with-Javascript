@@ -1,185 +1,174 @@
 // var canvas = document.getElementById('myCanvas');
 // var context = canvas.getContext('2d');
 
-const map = [
-                [1,1,1,1,0,],
-                [0,1,0,0,0,],
-                [0,1,0,0,0,],
-                [0,1,1,1,0,],
-                [0,0,0,1,1,],
-            ];
+// Start location will be in the following format:
+// [distanceFromTop, distanceFromLeft]
+var findShortestPath = function(startCoordinates, grid) {
+    var distanceFromTop = startCoordinates[0];
+    var distanceFromLeft = startCoordinates[1];
 
-let frontier = [];
-let startPoint = [0,0];
-let endPoint = [4,4];
-
-
-function getShortestPath(startCoordinates,map){
-    let distanceFromTop = startPoint[0];
-    let distanceFromLeft = startPoint[1];
-
-    let location = {
+    // Each "location" will store its coordinates
+    // and the shortest path required to arrive there
+    var location = {
         distanceFromTop: distanceFromTop,
         distanceFromLeft: distanceFromLeft,
-        path:[],
-        status:'start'
+        path: [],
+        status: 'Start'
     };
 
-    // initializing start location into queue:
-    let frontier = [location];
+    // Initialize the queue with the start location already inside
+    var queue = [location];
 
-    //Now looping through map to find the goal
-    while (frontier.length > 0){
-        // get 1st element from array while removing it simultaneously.
-        let currentCell = frontier.shift();
+    // Loop through the grid searching for the goal
+    while (queue.length > 0) {
+        // Take the first location off the queue
+        var currentLocation = queue.shift();
 
-        let directions = ['up','right','down','left'];
-
-        directions.forEach(function(d){
-            let newCell = exploreInDirection(currentCell, directions[d], map);
-
-            if(newCell.status === 'Goal'){
-                return newCell.path;
-            } else if (newCell.status === 'Valid'){
-                frontier.push(newCell);
-            };
-        });
-
-    };
-
-    // if no valid path found
-    return false;
-};
-
-
-function cellStatus(location, map){
-
-    let dft = location.distanceFromTop;
-    let dfl = location.distanceFromLeft;
-
-    if (    dfl < 0 ||
-            dfl >= map[0].length ||
-            dft < 0 ||
-            dft >= map.length) {
-
-            // location is not on the map
-            return "Invalid";
-
-            } else if (map[dft][dfl] === "Goal") {
-                return "Goal";
-            } else if (map[dft][dfl] !== "Empty") {
-                // either visted or obstacle
-                return "Blocked";
-            } else {
-                return "Valid";
+        // Explore North
+        var newLocation = exploreInDirection(currentLocation, 'North', grid);
+            if (newLocation.status === 'Goal') {
+                console.log(`${newLocation.distanceFromLeft} and ${newLocation.distanceFromTop}` )
+            return newLocation.path;
+            } else if (newLocation.status === 'Valid') {
+            queue.push(newLocation);
             }
 
-};
+        // Explore East
+        var newLocation = exploreInDirection(currentLocation, 'East', grid);
+            if (newLocation.status === 'Goal') {
+                console.log(`${newLocation.distanceFromLeft} and ${newLocation.distanceFromTop}` )
+            return newLocation.path;
+            } else if (newLocation.status === 'Valid') {
+            queue.push(newLocation);
+            }
 
-function exploreInDirection(currentCell, direction, map){
+        // Explore South
+        var newLocation = exploreInDirection(currentLocation, 'South', grid);
+            if (newLocation.status === 'Goal') {
+            return newLocation.path;
+            } else if (newLocation.status === 'Valid') {
+            queue.push(newLocation);
+            }
 
-    let newPath = currentCell.path.slice();
-    newPath.push(direction);
-
-    let dft = currentCell.distanceFromTop;
-    let dfl = currentCell.distanceFromLeft;
-
-    switch (direction) {
-        case "up":
-            dft -= 1;
-            break;
-        case "right":
-            dfl += 1;
-            break;
-        case "down":
-            dft += 1;
-            break;
-        case "left":
-            dfl -= 1;
-            break;
+        // Explore West
+        var newLocation = exploreInDirection(currentLocation, 'West', grid);
+            if (newLocation.status === 'Goal') {
+            return newLocation.path;
+            } else if (newLocation.status === 'Valid') {
+            queue.push(newLocation);
+            }
     }
 
-    let newLocation = {
-        distanceFromTop: dft,
-        distanceFromLeft: dfl,
-        path: newPath,
-        status: "unknown"
-    };
-    newLocation.status = cellStatus(newLocation,map);
+  // No valid path found
+  return false;
 
-    if (newLocation.status === "Valid") {
-        map[newLocation.distanceFromTop][newLocation.distanceFromLeft] = "Visited";
-    }
+};
 
-    return newLocation;
+// This function will check a location's status
+// (a location is "valid" if it is on the grid, is not an "obstacle",
+// and has not yet been visited by our algorithm)
+// Returns "Valid", "Invalid", "Blocked", or "Goal"
+function locationStatus(location, grid) {
+  var gridSize = grid.length;
+  var dft = location.distanceFromTop;
+  var dfl = location.distanceFromLeft;
+
+  if (  dfl < 0 ||
+        dfl >= gridSize ||
+        dft < 0 ||
+        dft >= gridSize) {
+
+    // location is not on the grid--return false
+    return 'Invalid';
+  } else if (grid[dft][dfl] === 'Goal') {
+    return 'Goal';
+  } else if (grid[dft][dfl] !== 'Empty') {
+    // location is either an obstacle or has been visited
+    return 'Blocked';
+  } else {
+    return 'Valid';
+  }
+};
+
+
+// Explores the grid from the given location in the given
+// direction
+var exploreInDirection = function(currentLocation, direction, grid) {
+  var newPath = currentLocation.path.slice();
+  newPath.push(direction);
+
+  var dft = currentLocation.distanceFromTop;
+  var dfl = currentLocation.distanceFromLeft;
+
+  if (direction === 'North') {
+    dft -= 1;
+  } else if (direction === 'East') {
+    dfl += 1;
+  } else if (direction === 'South') {
+    dft += 1;
+  } else if (direction === 'West') {
+    dfl -= 1;
+  }
+
+  var newLocation = {
+    distanceFromTop: dft,
+    distanceFromLeft: dfl,
+    path: newPath,
+    status: 'Unknown'
+  };
+  newLocation.status = locationStatus(newLocation, grid);
+
+  // If this new location is valid, mark it as 'Visited'
+  if (newLocation.status === 'Valid') {
+    grid[newLocation.distanceFromTop][newLocation.distanceFromLeft] = 'Visited';
+  }
+
+  return newLocation;
 };
 
 
 
-
-// heuristic if we go down A* route
-function manhattanDistance(currentX, currentY, goalX, goalY){
-    let dx = Math.abs(goalX - currentX);
-    let dy = Math.abs(goalY - currentY); 
-    return dx + dy;
-};
-
-
-const inventorySeed = [
-    {
-        name: "Toothpaste",
-        location: "1",
-        coordinates: [10,20],
-        price: 2.5
-    },
-    {
-        name: "Oatmeal",
-        location: "2",
-        coordinates: [100,200],
-        price: 3.5
-    },
-    {
-        name: "Shampoo",
-        location: "3",
-        coordinates: [300,80],
-        price: 4.5
-    },
-    {
-        name: "Rice",
-        location: "4",
-        coordinates: [600,300],
-        price: 5.5
-    },
-    {
-        name: "Light Bulbs",
-        location: "5",
-        coordinates: [500,90],
-        price: 6.5
-    }
+var grid = [
+    [1,1,1,1,"G"],
+    [0,1,0,0,0],
+    [0,1,0,0,0],
+    [0,1,1,1,0],
+    [0,0,0,1,"G"],
 ];
+   
+   for(var i = 0; i < grid.length; i++) {
+       for(var j = 0; j < grid.length; j++) {
+           
+           if (grid[i][j] === 0) {
+               grid[i][j] = "Obstacle";
+           } else if (grid[i][j] === "G") {
+            grid[i][j] = "Goal";
+           } else {
+            grid[i][j] = "Empty";
+           }
+       }
+   };
 
+
+grid[0][0] = "Start";
+
+
+
+console.log(findShortestPath([0,1], grid));
 
 // funciton to draw lines from whatever list is passed in
 function createPath (inventory){
 
-        context.beginPath();
-        context.moveTo(entrance[0],entrance[1]);
+    context.beginPath();
+    context.moveTo(entrance[0],entrance[1]);
 
 
-        // looping through every element in the list
-        inventory.forEach(function(e){
-            context.lineTo(e.coordinates[0],e.coordinates[1]);
+    // looping through every element in the list
+    inventory.forEach(function(e){
+        context.lineTo(e.coordinates[0],e.coordinates[1]);
 
-        });
-        // finally draw the stroke
-        context.stroke();
+    });
+    // finally draw the stroke
+    context.stroke();
 }
-
-
-
-
-
-console.log(getShortestPath([0,0], map));
-
-
 
