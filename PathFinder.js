@@ -102,7 +102,14 @@ var findShortestPath = function(startCoordinates, grid) {
         // Explore right
         var newLocation = exploreInDirection(currentLocation, 'right', grid);
             if (newLocation.status === 'Goal') {
-            return newLocation.path;
+
+                    // get coordinates to draw later
+                    let coordinates = newLocation.distanceFromTop + ","+newLocation.distanceFromLeft
+                    // Find and remove item from an array
+                    inventoryQueue.splice(isItemInArray(inventoryQueue,coordinates), 1);
+                    return coordinates;
+
+            // return newLocation.path;
             } else if (newLocation.status === 'Valid') {
             queue.push(newLocation);
             }
@@ -110,6 +117,8 @@ var findShortestPath = function(startCoordinates, grid) {
         // Explore down
         var newLocation = exploreInDirection(currentLocation, 'down', grid);
             if (newLocation.status === 'Goal') {
+
+
             return newLocation.path;
             } else if (newLocation.status === 'Valid') {
             queue.push(newLocation);
@@ -119,13 +128,13 @@ var findShortestPath = function(startCoordinates, grid) {
         var newLocation = exploreInDirection(currentLocation, 'left', grid);
             if (newLocation.status === 'Goal') {
                 
-                                // // get coordinates to draw later
-                                // let coordinates = newLocation.distanceFromTop + ","+newLocation.distanceFromLeft
-                                // // Find and remove item from an array
-                                // inventoryQueue.splice(isItemInArray(inventoryQueue,coordinates), 1);
-                                // return coordinates;
+                                // get coordinates to draw later
+                                let coordinates = newLocation.distanceFromTop + ","+newLocation.distanceFromLeft
+                                // Find and remove item from an array
+                                inventoryQueue.splice(isItemInArray(inventoryQueue,coordinates), 1);
+                                return coordinates;
 
-                return newLocation.path;
+                // return newLocation.path;
 
             } else if (newLocation.status === 'Valid') {
             queue.push(newLocation);
