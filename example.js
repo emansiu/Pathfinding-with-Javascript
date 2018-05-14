@@ -63,15 +63,15 @@ var findShortestPath = function(startCoordinates, grid) {
 // (a location is "valid" if it is on the grid, is not an "obstacle",
 // and has not yet been visited by our algorithm)
 // Returns "Valid", "Invalid", "Blocked", or "Goal"
-var locationStatus = function(location, grid) {
+function locationStatus(location, grid) {
   var gridSize = grid.length;
   var dft = location.distanceFromTop;
   var dfl = location.distanceFromLeft;
 
-  if (location.distanceFromLeft < 0 ||
-      location.distanceFromLeft >= gridSize ||
-      location.distanceFromTop < 0 ||
-      location.distanceFromTop >= gridSize) {
+  if (  dfl < 0 ||
+        dfl >= gridSize ||
+        dft < 0 ||
+        dft >= gridSize) {
 
     // location is not on the grid--return false
     return 'Invalid';
@@ -89,7 +89,7 @@ var locationStatus = function(location, grid) {
 // Explores the grid from the given location in the given
 // direction
 var exploreInDirection = function(currentLocation, direction, grid) {
-  var newPath = currentLocation.path.slice();
+  var newPath = currentLocation.path;
   newPath.push(direction);
 
   var dft = currentLocation.distanceFromTop;

@@ -13,6 +13,7 @@ let frontier = [];
 let startPoint = [0,0];
 let endPoint = [4,4];
 
+
 function getShortestPath(startCoordinates,map){
     let distanceFromTop = startPoint[0];
     let distanceFromLeft = startPoint[1];
@@ -46,10 +47,71 @@ function getShortestPath(startCoordinates,map){
 
     };
 
+    // if no valid path found
+    return false;
 };
 
-let cellStatus = function(location, map){
 
+function cellStatus(location, map){
+
+    let dft = location.distanceFromTop;
+    let dfl = location.distanceFromLeft;
+
+    if (    dfl < 0 ||
+            dfl >= map[0].length ||
+            dft < 0 ||
+            dft >= map.length) {
+
+            // location is not on the grid
+            return "Invalid";
+
+            } else if (map[dft][dfl] === "Goal") {
+                return "Goal";
+            } else if (map[dft][dfl] !== "Empty") {
+                // either visted or obstacle
+                return "Blocked";
+            } else {
+                return "Valid";
+            }
+
+};
+
+function exploreInDirection(currentCell, direction, map){
+
+    let newPath = currentCell.path.slice();
+    newPath.push(direction);
+
+    let dft = currentCell.distanceFromTop;
+    let dfl = currentCell.distanceFromLeft;
+
+    switch (direction) {
+        case "up":
+            dft -= 1;
+            break;
+        case "right":
+            dfl += 1;
+            break;
+        case "down":
+            dft += 1;
+            break;
+        case "left":
+            dfl -= 1;
+            break;
+    }
+
+    let newLocation = {
+        distanceFromTop: dft,
+        distanceFromLeft: dfl,
+        path: newPath,
+        status: "unknown"
+    };
+    newLocation.status = cellStatus(newLocation,map);
+
+    if (newLocation.status === "Valid") {
+        map[newLocation.distanceFromTop][newLocation.distanceFromLeft] = "Visited";
+    }
+
+    return newLocation;
 };
 
 
@@ -110,28 +172,9 @@ const inventorySeed = [
 // funciton to draw lines from whatever list is passed in
 function createPath (inventory){
 
-    const entrance = [100,30];
-    let shortestPath;
-    let currentPath = 0;
-
-    shortestPath = distance (entrance[0],inventory[0].coordinates[0],entrance[1],inventory[0].coordinates[1])
-    console.log(shortestPath);
-
         context.beginPath();
         context.moveTo(entrance[0],entrance[1]);
 
-        // get shortest path
-        // inventory.forEach(function(e){
-        //     if (distance(e.coordinates[0],,e.coordinates[1]))
-        //     context.lineTo(e.coordinates[0],e.coordinates[1]);
-
-        // });
-        inventory.forEach(function(e,index){
-            console.log(inventory[index+1].coordinates[0]);
-            // if (distance(e.coordinates[0],inventory[index+1].coordinates[0],e.coordinates[1],inventory[index+1].coordinates[1]) < shortestPath){
-            //     shortestPath = distance(inventory[index+1].coordinates[0],inventory[index+1].coordinates[1]);
-            // }
-        });
 
         // looping through every element in the list
         inventory.forEach(function(e){
