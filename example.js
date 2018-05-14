@@ -89,7 +89,7 @@ function locationStatus(location, grid) {
 // Explores the grid from the given location in the given
 // direction
 var exploreInDirection = function(currentLocation, direction, grid) {
-  var newPath = currentLocation.path;
+  var newPath = currentLocation.path.slice();
   newPath.push(direction);
 
   var dft = currentLocation.distanceFromTop;
@@ -126,27 +126,45 @@ var exploreInDirection = function(currentLocation, direction, grid) {
 
 // Create a 4x4 grid
 // Represent the grid as a 2-dimensional array
-var gridSize = 5;
-var grid = [];
-for (var i=0; i<gridSize; i++) {
-  grid[i] = [];
-  for (var j=0; j<gridSize; j++) {
-    grid[i][j] = 'Empty';
-  }
-};
+// var gridSize = 5;
+// var grid = [];
+// for (var i=0; i<gridSize; i++) {
+//   grid[i] = [];
+//   for (var j=0; j<gridSize; j++) {
+//     grid[i][j] = 'Empty';
+//     if (grid[i][j] === 0){
+//         grid[i][j] = "Obstacle";
+//     }
+//   }
+// };
+var grid = [
+    [1,1,1,1,0,],
+    [0,1,0,0,0,],
+    [0,1,0,0,0,],
+    [0,1,1,1,0,],
+    [0,0,0,1,1,],
+];
+   
+   for(var i = 0; i < grid.length; i++) {
+       for(var j = 0; j < grid.length; j++) {
+           
+           if (grid[i][j] === 0) {
+               grid[i][j] = "Obstacle";
+           } else {
+            grid[i][j] = "Empty";
+           }
+       }
+   };
 
 // Think of the first index as "distance from the top row"
 // Think of the second index as "distance from the left-most column"
-
+console.log(grid[1][0]);
 // This is how we would represent the grid with obstacles above
 grid[0][0] = "Start";
 grid[4][4] = "Goal";
 
-grid[1][1] = "Obstacle";
-grid[1][2] = "Obstacle";
-grid[1][3] = "Obstacle";
-grid[2][1] = "Obstacle";
 
-grid[3][1] = "Obstacle";
+
+
 
 console.log(findShortestPath([0,0], grid));
