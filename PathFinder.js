@@ -177,16 +177,7 @@ function createPath (inventory){
 
 
 
-map[0][0] = "Start";
-map[4][4] = "Goal";
 
-map[0][2] = "Obstacle";
-map[1][1] = "Obstacle";
-map[1][2] = "Obstacle";
-map[2][1] = "Obstacle";
-
-map[3][3] = "Obstacle";
-map[4][3] = "Obstacle";
 
 console.log(getShortestPath([0,0], map));
 
