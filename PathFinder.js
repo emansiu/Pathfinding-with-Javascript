@@ -66,7 +66,6 @@ var findShortestPath = function(startCoordinates, grid) {
         path: [],
         status: 'Start'
     };
-
     // Initialize the queue with the start location already inside
     var queue = [location];
 
@@ -104,10 +103,11 @@ var findShortestPath = function(startCoordinates, grid) {
             if (newLocation.status === 'Goal') {
 
                     // get coordinates to draw later
-                    let coordinates = newLocation.distanceFromTop + ","+newLocation.distanceFromLeft
+                    let coordinates = [newLocation.distanceFromTop, newLocation.distanceFromLeft];
                     // Find and remove item from an array
                     inventoryQueue.splice(isItemInArray(inventoryQueue,coordinates), 1);
-                    return coordinates;
+                    resetPaths();
+                    return findShortestPath(coordinates,grid);
 
             // return newLocation.path;
             } else if (newLocation.status === 'Valid') {
@@ -129,10 +129,11 @@ var findShortestPath = function(startCoordinates, grid) {
             if (newLocation.status === 'Goal') {
                 
                                 // get coordinates to draw later
-                                let coordinates = newLocation.distanceFromTop + ","+newLocation.distanceFromLeft
+                                let coordinates = [newLocation.distanceFromTop, newLocation.distanceFromLeft];
                                 // Find and remove item from an array
                                 inventoryQueue.splice(isItemInArray(inventoryQueue,coordinates), 1);
-                                return coordinates;
+                                resetPaths();
+                                return findShortestPath(coordinates,grid);
 
                 // return newLocation.path;
 
@@ -142,7 +143,7 @@ var findShortestPath = function(startCoordinates, grid) {
     }
 
   // No valid path found
-  return false;
+  return currentLocation.distanceFromTop + ","+currentLocation.distanceFromLeft;
 
 };
 
@@ -177,8 +178,6 @@ function locationStatus(location, grid) {
 // Explores the grid from the given location in the given
 // direction
 var exploreInDirection = function(currentLocation, direction, grid) {
-  var newPath = currentLocation.path.slice();
-  newPath.push(direction);
 
   var dft = currentLocation.distanceFromTop;
   var dfl = currentLocation.distanceFromLeft;
@@ -196,7 +195,7 @@ var exploreInDirection = function(currentLocation, direction, grid) {
   var newLocation = {
     distanceFromTop: dft,
     distanceFromLeft: dfl,
-    path: newPath,
+    path: currentLocation,
     status: 'Unknown'
   };
   newLocation.status = locationStatus(newLocation, grid);
@@ -238,12 +237,6 @@ for(var i = 0; i < grid.length; i++) {
     }
 };
 
-// console.log(inventoryQueue);
-// console.log(grid[1][0])
-console.log(findShortestPath([0,1], grid));
-console.table(grid);
-// console.log(inventoryQueue);
-// console.log(grid[1][1])
 
 function resetPaths(){
 
@@ -260,23 +253,9 @@ function resetPaths(){
 
 }
 
-resetPaths();
-console.log(findShortestPath([1,0], grid));
-resetPaths();
 console.table(grid);
-console.log(findShortestPath([0,4], grid));
+console.log(findShortestPath([0,1],grid));
 console.table(grid);
-console.log(inventoryQueue);
-// console.log(inventoryQueue);
-// while (inventoryQueue.length > 1) {
-    
-//     console.log(inventoryQueue.length);
-//     let newStart = findShortestPath([0,1], grid);
-//     console.log(newStart);
-//     resetPaths();
-//     console.log(findShortestPath(newStart,grid));
-
-// }
 
 
 
