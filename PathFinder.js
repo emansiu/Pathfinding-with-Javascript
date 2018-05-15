@@ -91,8 +91,11 @@ var findShortestPath = function(startCoordinates, grid) {
                 // Find and remove item from an array
                 inventoryQueue.splice(isItemInArray(inventoryQueue,coordinates), 1);
                 resetPaths();
-                console.log(newLocation.path);
-                console.log(coordinates);
+                newLocation.path.forEach(function (e) {  
+                    masterPath.push(e);
+                });
+                masterPath.push(coordinates);
+                // console.log(masterPath);
                 return findShortestPath(coordinates,grid);
 
             } else if (newLocation.status === 'Valid') {
@@ -108,8 +111,11 @@ var findShortestPath = function(startCoordinates, grid) {
                     // Find and remove item from an array
                     inventoryQueue.splice(isItemInArray(inventoryQueue,coordinates), 1);
                     resetPaths();
-                    console.log(newLocation.path);
-                    console.log(coordinates);
+                    newLocation.path.forEach(function (e) {  
+                        masterPath.push(e);
+                    });
+                    masterPath.push(coordinates);
+                    // console.log(masterPath);
                     return findShortestPath(coordinates,grid);
 
             } else if (newLocation.status === 'Valid') {
@@ -125,8 +131,11 @@ var findShortestPath = function(startCoordinates, grid) {
                 // Find and remove item from an array
                 inventoryQueue.splice(isItemInArray(inventoryQueue,coordinates), 1);
                 resetPaths();
-                console.log(newLocation.path);
-                console.log(coordinates);
+                newLocation.path.forEach(function (e) {  
+                    masterPath.push(e);
+                });
+                masterPath.push(coordinates);
+                // console.log(masterPath);
                 return findShortestPath(coordinates,grid);
 
             } else if (newLocation.status === 'Valid') {
@@ -143,9 +152,11 @@ var findShortestPath = function(startCoordinates, grid) {
                 // Find and remove item from an array
                 inventoryQueue.splice(isItemInArray(inventoryQueue,coordinates), 1);
                 resetPaths();
-                masterPath.push(newLocation.path);
+                newLocation.path.forEach(function (e) {  
+                    masterPath.push(e);
+                });
                 masterPath.push(coordinates);
-                console.log(masterPath);
+                // console.log(masterPath);
                 return findShortestPath(coordinates,grid);
                 
 
@@ -271,9 +282,25 @@ function resetPaths(){
 
 }
 
+function scale(){
+
+        for(var i = 0; i < grid.length; i++) {
+            for(var j = 0; j < grid.length; j++) {
+                
+                if (grid[i][j] === 0) {
+                    grid[i][j] = "Obstacle";
+                } else if (grid[i][j] === "Visited") {
+                grid[i][j] = "Empty";
+                } 
+            }
+        };
+    
+}
+
 console.table(grid);
 console.log(findShortestPath([0,1],grid));
 console.table(grid);
+console.log(masterPath);
 
 while (inventoryQueue > 0){
 
