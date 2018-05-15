@@ -15,12 +15,12 @@ const inventorySeed = [
         coordinates: [1,0],
         price: 3.5
     },
-    // {
-    //     name: "Shampoo",
-    //     location: "3",
-    //     coordinates: [300,80],
-    //     price: 4.5
-    // },
+    {
+        name: "Shampoo",
+        location: "3",
+        coordinates: [1,4],
+        price: 4.5
+    },
     // {
     //     name: "Rice",
     //     location: "4",
@@ -34,6 +34,10 @@ const inventorySeed = [
         price: 6.5
     }
 ];
+
+// *****ALL DIRECTIONS WILL BE PUSHED INTO THIS ARRAY**********
+let masterPath = [];
+
 
 // function to find if the coordinates are in the array
 function isItemInArray(array, item) {
@@ -76,25 +80,21 @@ var findShortestPath = function(startCoordinates, grid) {
         // Take the first location off the queue
         var currentLocation = queue.shift();
 
-        // let direction = ['up','right','down','left'];
-
-        // function directionHistory (direction){
-        //     direction.forEach(function(d){
-        //         let newLocation = exploreInDirection(currentLocation,d,grid);
-
-        //         if (newLocation.status === 'Goal') {
-        //         return newLocation.path;
-        //         } else if (newLocation.status === 'Valid') {
-        //         queue.push(newLocation);
-        //         }
-        //     });
-        // };
-        // directionHistory(direction);
+        
 
         // Explore up
         var newLocation = exploreInDirection(currentLocation, 'up', grid);
             if (newLocation.status === 'Goal') {
-            return newLocation.path;
+
+                // get coordinates to draw later
+                let coordinates = [newLocation.distanceFromTop,newLocation.distanceFromLeft];
+                // Find and remove item from an array
+                inventoryQueue.splice(isItemInArray(inventoryQueue,coordinates), 1);
+                resetPaths();
+                console.log(newLocation.path);
+                console.log(coordinates);
+                return findShortestPath(coordinates,grid);
+
             } else if (newLocation.status === 'Valid') {
             queue.push(newLocation);
             }
@@ -108,10 +108,10 @@ var findShortestPath = function(startCoordinates, grid) {
                     // Find and remove item from an array
                     inventoryQueue.splice(isItemInArray(inventoryQueue,coordinates), 1);
                     resetPaths();
-                                console.log(coordinates);
-                                return findShortestPath(coordinates,grid);
+                    console.log(newLocation.path);
+                    console.log(coordinates);
+                    return findShortestPath(coordinates,grid);
 
-            // return newLocation.path;
             } else if (newLocation.status === 'Valid') {
             queue.push(newLocation);
             }
@@ -120,8 +120,15 @@ var findShortestPath = function(startCoordinates, grid) {
         var newLocation = exploreInDirection(currentLocation, 'down', grid);
             if (newLocation.status === 'Goal') {
 
+                // get coordinates to draw later
+                let coordinates = [newLocation.distanceFromTop,newLocation.distanceFromLeft];
+                // Find and remove item from an array
+                inventoryQueue.splice(isItemInArray(inventoryQueue,coordinates), 1);
+                resetPaths();
+                console.log(newLocation.path);
+                console.log(coordinates);
+                return findShortestPath(coordinates,grid);
 
-            return newLocation.path;
             } else if (newLocation.status === 'Valid') {
             queue.push(newLocation);
             }
@@ -130,15 +137,17 @@ var findShortestPath = function(startCoordinates, grid) {
         var newLocation = exploreInDirection(currentLocation, 'left', grid);
             if (newLocation.status === 'Goal') {
                 
-                                // get coordinates to draw later
-                                let coordinates = [newLocation.distanceFromTop,newLocation.distanceFromLeft];
-                                // Find and remove item from an array
-                                inventoryQueue.splice(isItemInArray(inventoryQueue,coordinates), 1);
-                                resetPaths();
-                                console.log(coordinates);
-                                return findShortestPath(coordinates,grid);
 
-                // return newLocation.path;
+                // get coordinates to draw later
+                let coordinates = [newLocation.distanceFromTop,newLocation.distanceFromLeft];
+                // Find and remove item from an array
+                inventoryQueue.splice(isItemInArray(inventoryQueue,coordinates), 1);
+                resetPaths();
+                masterPath.push(newLocation.path);
+                masterPath.push(coordinates);
+                console.log(masterPath);
+                return findShortestPath(coordinates,grid);
+                
 
             } else if (newLocation.status === 'Valid') {
             queue.push(newLocation);
@@ -181,29 +190,33 @@ function locationStatus(location, grid) {
 // Explores the grid from the given location in the given
 // direction
 var exploreInDirection = function(currentLocation, direction, grid) {
-  var newPath = currentLocation.path.slice();
-  newPath.push(direction);
+    
+    var newPath = currentLocation.path.slice();
+    
 
-  var dft = currentLocation.distanceFromTop;
-  var dfl = currentLocation.distanceFromLeft;
+    var dft = currentLocation.distanceFromTop;
+    var dfl = currentLocation.distanceFromLeft;
 
-  if (direction === 'up') {
-    dft -= 1;
-  } else if (direction === 'right') {
-    dfl += 1;
-  } else if (direction === 'down') {
-    dft += 1;
-  } else if (direction === 'left') {
-    dfl -= 1;
-  }
+    newPath.push([dft,dfl]);
 
-  var newLocation = {
-    distanceFromTop: dft,
-    distanceFromLeft: dfl,
-    path: newPath,
-    status: 'Unknown'
-  };
-  newLocation.status = locationStatus(newLocation, grid);
+    if (direction === 'up') {
+        dft -= 1;
+    } else if (direction === 'right') {
+        dfl += 1;
+    } else if (direction === 'down') {
+        dft += 1;
+    } else if (direction === 'left') {
+        dfl -= 1;
+    }
+
+    var newLocation = {
+        distanceFromTop: dft,
+        distanceFromLeft: dfl,
+        path: newPath,
+        status: 'Unknown'
+    };
+        //assign new status
+    newLocation.status = locationStatus(newLocation, grid);
 
   // If this new location is valid, mark it as 'Visited'
   if (newLocation.status === 'Valid') {
@@ -217,7 +230,7 @@ var exploreInDirection = function(currentLocation, direction, grid) {
 
 var grid = [
     [1,1,1,1,1],
-    [1,1,0,0,0],
+    [1,1,1,1,1],
     [0,1,0,0,0],
     [0,1,1,1,0],
     [0,0,0,1,1],
