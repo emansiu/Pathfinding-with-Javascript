@@ -282,31 +282,22 @@ function resetPaths(){
 
 }
 
-function scale(){
 
-        for(var i = 0; i < grid.length; i++) {
-            for(var j = 0; j < grid.length; j++) {
-                
-                if (grid[i][j] === 0) {
-                    grid[i][j] = "Obstacle";
-                } else if (grid[i][j] === "Visited") {
-                grid[i][j] = "Empty";
-                } 
-            }
-        };
+function scaleCoordinates(scaleNumber){
+    let scaledCoordinates = [];
+
+    scaledCoordinates = masterPath.slice();
+    console.log(scaledCoordinates);
+        scaledCoordinates.forEach(function(e){
+            e[0] *= scaleNumber;
+            e[1] *= scaleNumber;
+        })
     
 }
 
-console.table(grid);
-console.log(findShortestPath([0,1],grid));
-console.table(grid);
-console.log(masterPath);
 
-while (inventoryQueue > 0){
-
-
-
-}
+findShortestPath([0,1],grid);
+scaleCoordinates(5);
 
 
 // funciton to draw lines from whatever list is passed in
