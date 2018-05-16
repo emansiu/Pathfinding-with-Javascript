@@ -6,31 +6,49 @@ const inventorySeed = [
     {
         name: "Toothpaste",
         location: "1",
-        coordinates: [0,4],
+        coordinates: [19,5],
         price: 2.5
     },
     {
         name: "Oatmeal",
         location: "2",
-        coordinates: [1,0],
+        coordinates: [8,11],
         price: 3.5
     },
     {
         name: "Shampoo",
         location: "3",
-        coordinates: [1,4],
+        coordinates: [15,4],
         price: 4.5
     },
-    // {
-    //     name: "Rice",
-    //     location: "4",
-    //     coordinates: [600,300],
-    //     price: 5.5
-    // },
+    {
+        name: "Rice",
+        location: "4",
+        coordinates: [10,15],
+        price: 5.5
+    },
     {
         name: "Light Bulbs",
         location: "5",
-        coordinates: [4,4],
+        coordinates: [20,7],
+        price: 6.5
+    },
+    {
+        name: "1",
+        location: "5",
+        coordinates: [20,29],
+        price: 6.5
+    },
+    {
+        name: "2",
+        location: "5",
+        coordinates: [1,26],
+        price: 6.5
+    },
+    {
+        name: "3",
+        location: "5",
+        coordinates: [1,1],
         price: 6.5
     }
 ];
@@ -175,14 +193,13 @@ var findShortestPath = function(startCoordinates, grid) {
 // and has not yet been visited by our algorithm)
 // Returns "Valid", "Invalid", "Blocked", or "Goal"
 function locationStatus(location, grid) {
-  var gridSize = grid.length;
   var dft = location.distanceFromTop;
   var dfl = location.distanceFromLeft;
 
   if (  dfl < 0 ||
-        dfl >= gridSize ||
+        dfl >= grid[0].length ||
         dft < 0 ||
-        dft >= gridSize) {
+        dft >= grid.length) {
 
     // location is not on the grid--return false
     return 'Invalid';
@@ -238,13 +255,29 @@ var exploreInDirection = function(currentLocation, direction, grid) {
 };
 
 
-
 var grid = [
-    [1,1,1,1,1],
-    [1,1,1,1,1],
-    [0,1,0,0,0],
-    [0,1,1,1,0],
-    [0,0,0,1,1],
+    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+    [1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,0,0,0,0],
+    [0,1,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,1,0,1,0,0,0,0],
+    [0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0],
+    [0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,0,1,0,1,1,0,0,0,1,1,0,0,0,0],
+    [0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,0,1,0,1,1,0,0,1,1,1,0,0,0,0],
+    [0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,0,1,0,1,1,0,0,1,0,1,0,0,0,0],
+    [0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,0,1,0,1,1,0,0,1,0,1,0,0,0,0],
+    [0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,0,1,0,1,1,1,1,1,1,1,0,0,0,0],
+    [0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,0,1,0,1,1,0,0,1,0,1,0,0,0,0],
+    [0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,0,1,0,1,1,0,0,1,0,1,0,0,0,0],
+    [0,1,1,1,0,1,0,1,0,1,0,1,0,1,0,1,0,0,1,0,1,1,0,0,1,0,1,0,0,0,0],
+    [0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,0,1,0,0,1,1,1,1,1,1,0,0,0,0],
+    [0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,0,1,0,0,1,1,0,1,0,1,0,0,0,0],
+    [0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,0,1,0,0,1,1,0,1,1,1,0,0,0,0],
+    [0,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+    [0,1,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,1,1,0,1,0,1,0,0,1,1,0],
+    [0,1,1,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,1,1,0,1,0,1,0,0,1,1,0],
+    [0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,1,1,0,1,0,1,0,0,1,1,0],
+    [0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,0,1,0,0,1,1,0],
+    [0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,0],
+    [0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0],
 ];
 
 // assigning inventory elements into the grid-------------------
@@ -254,7 +287,7 @@ inventorySeed.forEach(function(e){
 
 // assigning dynamic values from the grid --------
 for(var i = 0; i < grid.length; i++) {
-    for(var j = 0; j < grid.length; j++) {
+    for(var j = 0; j < grid[0].length; j++) {
         
         if (grid[i][j] === 0) {
             grid[i][j] = "Obstacle";
@@ -296,29 +329,40 @@ function scaleCoordinates(scaleNumber){
 }
 
 
-findShortestPath([0,1],grid);
-scaleCoordinates(5);
+findShortestPath([21,20],grid);
+scaleCoordinates(27);
 
 
 // funciton to draw lines from whatever list is passed in
 function createPath (inventory){
 
-    const entrance = [100,30];
-    let shortestPath;
-    let currentPath = 0;
-
+    const entrance = inventory[0];
 
         context.beginPath();
-        context.moveTo(entrance[0],entrance[1]);
-
-        
-     
+        context.moveTo(entrance[1],entrance[0]);
 
         // looping through every element in the list
         inventory.forEach(function(e){
-            context.lineTo(e.coordinates[0],e.coordinates[1]);
+            context.lineTo(e[1],e[0]);
 
         });
         // finally draw the stroke
+        context.strokeStyle="#11d902";
+        context.lineWidth= 5;
         context.stroke();
+        
+
+        inventorySeed.forEach(function(e){
+            console.log(e.coordinates[1]);
+            context.beginPath();
+            context.arc(e.coordinates[1]*27,e.coordinates[0]*27,20,0,2 * Math.PI);
+            context.strokeStyle="#11d902";
+            context.lineWidth= 5;
+            context.stroke();
+        });
+        
 }
+
+createPath(masterPath)
+console.table(grid);
+
